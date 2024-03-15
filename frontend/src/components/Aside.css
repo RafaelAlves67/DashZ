@@ -1,0 +1,27 @@
+aside{
+    min-height: calc(100vh - 110px); /* 70px é uma estimativa da altura do seu cabeçalho */
+    background-color: black;
+    width: 15%;
+    display: flex;
+    flex-direction: column; 
+    align-items: start; 
+    justify-content: space-between;
+}
+
+aside ul li {
+    padding: 30px 0;
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px solid #f5f5f7;
+}
+
+aside ul li a{
+    font-size: 1.2rem;
+}
+
+aside p{
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.2rem;
+}
