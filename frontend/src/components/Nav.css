@@ -24,3 +24,8 @@ nav ul {
 nav ul li{
     margin-left: 10px;
 }
+
+.p-name{
+    color: white;
+    margin-right: 10px
+}

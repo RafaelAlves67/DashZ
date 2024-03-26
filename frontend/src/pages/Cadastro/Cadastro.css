@@ -1,0 +1,15 @@
+ form{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    justify-content: center;
+    margin-top: 50px
+}
+
+form h3{
+    text-align: center;
+}
+
+form input{
+    margin-bottom: 10px;
+} 

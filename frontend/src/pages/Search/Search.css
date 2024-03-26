@@ -1,0 +1,15 @@
+.div-search{
+    width: 80%;
+}
+
+.div-btn-back{
+    display: flex;
+    justify-content: left;
+    align-items: start;
+    margin-top: 50px;
+}
+
+.div-btn-back a{
+    text-decoration: none;
+    color: white;
+}

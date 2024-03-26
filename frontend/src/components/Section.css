@@ -18,3 +18,47 @@ section div{
 .btn{
     margin-right: 5px;
 }
+
+.div-center{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal-register{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 40%;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);  
+}
+
+.modal-register h1{
+    width: 60%;
+    text-align: center;
+    border-bottom: 2px solid rgb(63, 32, 32);
+}
+
+
+.modal-register input{
+    font-size: 1.2rem;
+}
+
+.modal-register select{
+    font-size: 1.1rem;
+}
+
+
+.div-btn-register{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+}

@@ -1,6 +1,16 @@
 import "./Nav.css"
+import { Link } from "react-router-dom"
+import { useContext } from "react"
+import { Context } from "../context/Context"
 
 const Nav = () => {
+
+  const {authenticate, logout, name} = useContext(Context)
+
+  console.log(name)
+
+
+
   return (
     <nav>
             <div>
@@ -8,8 +18,10 @@ const Nav = () => {
             </div>
 
             <ul>
-                <li><a href="" className="custom-links">Login</a></li>
-                <li><a href="" className="custom-links">Cadastrar</a></li>
+            {!authenticate && <li><Link to ="/login" className="custom-links">Login</Link></li>}
+            {!authenticate &&<li><Link to="/cadastro" className="custom-links">Cadastrar</Link></li> }
+            {authenticate && <li><p className="p-name">Olá {name}</p></li>}
+            {authenticate && <Link to="/" className="custom-links" onClick={logout}>Sair</Link>}
             </ul>
         </nav>
   )

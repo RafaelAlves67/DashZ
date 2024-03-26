@@ -1,0 +1,45 @@
+form{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    justify-content: center;
+}
+
+form h3{
+    text-align: center;
+}
+
+form input{
+    margin-bottom: 10px;
+}
+
+.link-register{
+    font-size: 0.8rem;
+    text-align: end;
+    padding: 5px;
+}
+
+.link-register:hover{
+    color: black;
+}
+
+.error{
+    margin-top: 30px;
+    background-color: #eea2a2;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    color: red;
+}
+
+.sucess{
+    margin-top: 30px;
+    background-color: #00ff73cb;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    color: green;
+}
+

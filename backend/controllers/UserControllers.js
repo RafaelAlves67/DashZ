@@ -11,7 +11,7 @@ export class UserControllers{
 
     // FUNÇÃO PARA CRIAR USUÁRIO
     static async createUser(req,res){
-        const {name, email, password, confirmPassword} = req.body 
+        const {name, email, password, confirmPassword, phone} = req.body 
 
         if(!name){
             return res.status(401).json({msg: "O campo de nome é obrigatório!"})
@@ -31,6 +31,10 @@ export class UserControllers{
             return res.status(401).json({msg: "O campo de confirmação de senha é obrigatório!"})
         }
 
+        if(!phone){
+            return res.status(401).json({msg: "O campo de telefone é obrigatório!"})
+        }
+
         if(password !== confirmPassword){
             return res.status(401).json({msg: "As senhas devem ser iguais para confirmação!"})
         }
@@ -45,9 +49,9 @@ export class UserControllers{
         const hashPassword = await bcrypt.hash(password, salt)
 
         try{
-            const newUser = new User({name, email, password: hashPassword})
+            const newUser = new User({name, email, password: hashPassword, phone})
             newUser.save()
-            return res.status(200).json({msg: "Usuário criado!"})
+            return res.status(200).json({msg: "Usuário criado! Você será redirecionado para página de Login"})
         }catch(error){
             console.log("Erro de servidor ao criar usuario")
             return res.status(500).json("Erro de servidor interno")
@@ -77,29 +81,42 @@ export class UserControllers{
         if(checkPassword){
             const token = jwt.sign({id: user.id}, secret)
 
-            return res.status(200).json({msg: "Bem-vindo!", token})
+            return res.status(200).json({msg: "Bem-vindo!", token, user})
         }else{
             return res.status(401).json({msg: "Senha incorreta!"})
         }
     }
 
-    static async editUser(req,res){
-        const {name, email, password} = req.body 
-        const id = req.params.id
-        const updateUser = {name, email, password}
+    
 
-        const user = await User.findOne({_id: id})
+    static async editUser(req, res) {
+        const userEdited = req.body;
+        const id = req.params.id;
+    
+        try {
+            const user = await User.findOne({ _id: id });
+    
+            if (!user) {
+                return res.status(404).json({ msg: "Usuário não encontrado!" });
+            }
 
-        if(!user){
-            return res.status(404).json({msg: "Usuário não encontrado!"})
+            if(user.email === userEdited.email){
+                await User.updateOne({ _id: id }, userEdited);
+                const newUser = await User.findOne({ _id: id });
+                return res.status(200).json({ msg: "Usuário alterado", newUser });
+            }
+    
+            const emailExist = await User.findOne({ email: userEdited.email });
+    
+            if (emailExist) {
+                return res.status(403).json({ msg: "Email já existe! Tente outro email." });
+            }
+        } catch (error) {
+            console.log("Aconteceu o seguinte erro: ==> " + error);
+            return res.status(500).json({ msg: "Erro interno do servidor" });
         }
-
-        await User.updateOne({_id: id}, updateUser)
-
-        const newUser = await User.findOne({_id: id})
-        return res.status(200).json({msg: "Produto alterado", newUser})
-
     }
+    
 
     static async deleteUser(req, res){
         const id = req.params.id 
@@ -137,5 +154,30 @@ export class UserControllers{
         }
 
         return res.status(200).json(user)
+    }
+
+    static async getUserToken(req, res){
+        const authHeader = req.headers['authorization']
+        const token = authHeader && authHeader.split(' ')[1]
+
+        if(!token){
+            return res.status(404).json({msg: "Acesso negado!"})
+        }
+
+        jwt.verify(token, secret, async (error, user) => {
+            if(error){
+                return res.status(403).json({msg: "Token inválido!"})
+            }
+
+            const UserExist = await User.findById(user.id)
+            
+
+            if(!UserExist){
+                return res.status(404).json({msg: "Usuário não existe"})
+            }
+
+            UserExist.password = undefined
+            return res.status(200).json(UserExist)
+        })
     }
 }
