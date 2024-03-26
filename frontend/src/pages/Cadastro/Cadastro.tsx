@@ -62,7 +62,7 @@ const Cadastro = () => {
 
         <div className="div-erro">
             {msg === 'Usuário criado! Você será redirecionado para página de Login' && <p className="sucess">{msg}</p>}
-             {msg !== 'Usuário criado!' && msg.length > 0 && <p className="error">{msg}</p>} 
+             {msg !== 'Usuário criado! Você será redirecionado para página de Login' && msg.length > 0 && <p className="error">{msg}</p>} 
         </div>
     </div>
   )

@@ -31,19 +31,29 @@ export class UserControllers{
             return res.status(401).json({msg: "O campo de confirmação de senha é obrigatório!"})
         }
 
-        if(!phone){
-            return res.status(401).json({msg: "O campo de telefone é obrigatório!"})
-        }
-
         if(password !== confirmPassword){
             return res.status(401).json({msg: "As senhas devem ser iguais para confirmação!"})
         }
 
+        if(!phone){
+            return res.status(401).json({msg: "O campo de telefone é obrigatório!"})
+        }
+
+        if(phone.length !== 11){
+            return res.status(401).json({msg: "Insira um número de telefone válido!"})
+        }
+
+        const phoneExist = await User.findOne({phone: phone})
         const userExist = await User.findOne({email: email})
         
         if(userExist){
             return res.status(401).json({msg: "Email já existente!"})
         }
+
+        if(phoneExist){
+            return res.status(401).json({msg: "Telefone já cadastrado!"})
+        }
+
 
         const salt = 12
         const hashPassword = await bcrypt.hash(password, salt)

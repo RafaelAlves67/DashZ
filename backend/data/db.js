@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
+import { configDotenv } from "dotenv";
+configDotenv()
 
-async function main(){
-    const db = mongoose.connect('mongodb://localhost:27017/advocacia')
-    console.log('Conectou ao banco de dados MongoDB')
+const user = process.env.DB_USER
+const password = process.env.DB_PASSWORD
+
+async function main (){
+    await mongoose.connect(`mongodb+srv://${user}:${password}@cluster0.1mikqdj.mongodb.net/`)
+    console.log("Conectou ao Banco de dados MongoDB")
 }
 
 try{
     main();
 }catch(error){
-    console.log("Erro interno de servidor: ==>" + error)
+    console.log("Aconteceu o seguinte erro de servidor: " + error)
 }
 
 export default mongoose
