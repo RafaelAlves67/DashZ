@@ -1,6 +1,6 @@
 import { product } from "../types/types"
 
-const api = 'http://localhost:3000'
+const api = 'https://backend-sxzc.onrender.com'
 
 
 export default function useProduct(){

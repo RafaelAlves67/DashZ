@@ -25,7 +25,7 @@ const Perfil = () => {
 
     useEffect(() => {
         if (token) {
-            fetch('http://localhost:3000/getUser', {
+            fetch('https://backend-sxzc.onrender.com/getUser', {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`

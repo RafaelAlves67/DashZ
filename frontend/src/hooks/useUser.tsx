@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 
+const api = 'https://backend-sxzc.onrender.com'
+
 export default function useUser (){
 
     const [authenticate, setAuthenticate] = useState(false)
@@ -11,7 +13,7 @@ export default function useUser (){
 
         if(token){
             try{
-                fetch('http://localhost:3000', { 
+                fetch(api, { 
                     headers: {
                         "Content-Type" : "application/json",
                         "Authorization" : `Bearer ${token}`
@@ -29,7 +31,7 @@ export default function useUser (){
     async function authLogin(email: string, password: string){
 
         try{
-            const res = await fetch('http://localhost:3000/login', {
+            const res = await fetch(`${api}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type" : "Application/json"
@@ -52,7 +54,7 @@ export default function useUser (){
     async function register(name: string, email: string, password: string, confirmPassword: string, phone: string){
 
         try{
-            const res = await fetch('http://localhost:3000/create', {
+            const res = await fetch(`${api}/create`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({name, email, password, confirmPassword, phone})
